@@ -1,4 +1,9 @@
 {
     "site_name": "Simulation",
-    "site_description": "Simulazione calcistica"
+    "site_description": "Simulazione calcistica",
+
+    "group": "Gruppo",
+    "team": "Squadra",
+    "modality": "Modalità",
+    "search": "Cerca"
 }

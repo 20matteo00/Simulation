@@ -1,4 +1,9 @@
 {
     "site_name": "Simulation",
-    "site_description": "Soccer simulation"
+    "site_description": "Soccer simulation",
+
+    "group": "Group",
+    "team": "Team",
+    "modality": "Modality",
+    "search": "Search"
 }

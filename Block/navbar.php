@@ -1,3 +1,15 @@
+<?php
+$menu = [
+    'group',
+    'team',
+    'modality',
+];
+$l = [
+    'it',
+    'en',
+];
+?>
+
 <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
     <div class="container">
         <!-- Brand -->
@@ -12,16 +24,33 @@
         <!-- Navbar links -->
         <div class="collapse navbar-collapse" id="mainNavbar">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">Home</a>
-                </li>
+                <?php foreach ($menu as $m): ?>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="<?= "Menu/$m.php" ?>"><?= $langfile[$m] ?></a>
+                    </li>
+                <?php endforeach; ?>
             </ul>
 
-            <!-- Search form -->
-            <form class="d-flex">
-                <input class="form-control me-2" type="search" placeholder="Search…" aria-label="Search">
-                <button class="btn btn-outline-primary" type="submit">Search</button>
-            </form>
+            <div class="ms-auto me-3 mb-3 mb-lg-0">
+                <!-- Language selector -->
+                <form method="get" action="">
+                    <select name="lang" class="form-select form-select-sm" onchange="this.form.submit()">
+                        <?php foreach ($l as $langOption): ?>
+                            <option value="<?= $langOption ?>" <?= $lang === $langOption ? 'selected' : '' ?>>
+                                <?= strtoupper($langOption) ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                </form>
+            </div>
+            <div>
+                <!-- Search form -->
+                <form class="d-flex">
+                    <input class="form-control me-2" type="search" placeholder="<?= $langfile['search'] ?>…"
+                        aria-label="<?= $langfile['search'] ?>">
+                    <button class="btn btn-outline-primary" type="submit"><?= $langfile['search'] ?></button>
+                </form>
+            </div>
         </div>
     </div>
 </nav>
