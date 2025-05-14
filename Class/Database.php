@@ -180,7 +180,7 @@ class Database
      * 
      * @param string $table Nome della tabella
      * @param array $data Dati da inserire (associativo colonna => valore)
-     * @return int|false L'ID dell'ultimo inserimento o false in caso di errore
+     * @return bool True se l'inserimento è riuscito, false in caso di errore
      */
     public function insert($table, $data)
     {
@@ -195,7 +195,7 @@ class Database
         $sql = "INSERT INTO `{$table}` (`" . implode('`,`', $columns) . "`) VALUES (" . implode(',', $placeholders) . ")";
         $stmt = $this->query($sql, $values);
 
-        return $stmt ? $this->connection->lastInsertId() : false;
+        return $stmt ? true : false;
     }
 
     /**
@@ -290,6 +290,7 @@ class Database
         $this->createUsersTable();
         $this->createGroupsTable();
         $this->createTeamsTable();
+        $this->createGroupTeamsTable();
     }
 
     /**
@@ -320,32 +321,59 @@ class Database
     {
         $columns = [
             'user_id' => 'INT NOT NULL',
-            'nome' => 'VARCHAR(255) NOT NULL',
+            'name' => 'VARCHAR(255) NOT NULL',
             'params' => 'JSON',
             'created_at' => 'TIMESTAMP DEFAULT CURRENT_TIMESTAMP',
             'updated_at' => 'TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'
         ];
 
-        $primaryKey = ['user_id', 'nome']; // Chiave primaria composta
+        $primaryKey = ['user_id', 'name']; // Chiave primaria composta
 
-        // Chiave primaria composta
-        return $this->createTable('groups', $columns, $primaryKey);
+        // Creazione tabella groups
+        if ($this->createTable('groups', $columns, $primaryKey)) {
+            // Aggiunta della chiave esterna su user_id
+            $this->query("ALTER TABLE `groups` ADD CONSTRAINT `fk_groups_users_user_id` FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE CASCADE");
+        }
     }
 
     private function createTeamsTable()
     {
         $columns = [
             'user_id' => 'INT NOT NULL',
-            'nome' => 'VARCHAR(255) NOT NULL',
+            'name' => 'VARCHAR(255) NOT NULL',
             'params' => 'JSON',
             'created_at' => 'TIMESTAMP DEFAULT CURRENT_TIMESTAMP',
             'updated_at' => 'TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'
         ];
 
-        $primaryKey = ['user_id', 'nome']; // Chiave primaria composta
+        $primaryKey = ['user_id', 'name']; // Chiave primaria composta
 
-        // Chiave primaria composta
-        return $this->createTable('teams', $columns, $primaryKey);
+        // Creazione della tabella teams
+        if ($this->createTable('teams', $columns, $primaryKey)) {
+            // Aggiunta delle chiavi esterne
+            // Chiave esterna su user_id che fa riferimento a users
+            $this->query("ALTER TABLE `teams` ADD CONSTRAINT `fk_teams_users_user_id` FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE CASCADE");
+        }
+    }
+
+    private function createGroupTeamsTable()
+    {
+        $columns = [
+            'user_id' => 'INT NOT NULL',
+            'group_name' => 'VARCHAR(255) NOT NULL',
+            'team_name' => 'VARCHAR(255) NOT NULL',
+        ];
+
+        $primaryKey = ['user_id', 'group_name', 'team_name']; // Chiave primaria composta
+
+        // Creazione della tabella groupteam
+        if ($this->createTable('groupteam', $columns, $primaryKey)) {
+            // Aggiunta della chiave esterna su group_name e user_id che fa riferimento a groups
+            $this->query("ALTER TABLE `groupteam` ADD CONSTRAINT `fk_groupteam_groups_user_id_name` FOREIGN KEY (`user_id`, `group_name`) REFERENCES `groups`(`user_id`, `name`) ON DELETE CASCADE");
+
+            // Aggiunta della chiave esterna su team_name e user_id che fa riferimento a teams
+            $this->query("ALTER TABLE `groupteam` ADD CONSTRAINT `fk_groupteam_teams_user_id_name` FOREIGN KEY (`user_id`, `team_name`) REFERENCES `teams`(`user_id`, `name`) ON DELETE CASCADE");
+        }
     }
 
 

@@ -30,13 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (!$insert) {
                 $error = $langfile['registration_failed'];
             } else {
-                $_SESSION['user'] = [
-                    'username' => $username,
-                    'email' => $email,
-                    'level' => 3,
-                    'lang' => $lang
-                ];
-                header("Location: index.php");
+                header("Location: index.php?page=login");
                 exit();
             }
         }

@@ -1,7 +1,6 @@
-:root{
+:root {}
 
-}
-
+/* Tooltip */
 .tooltip-text {
     display: none;
     position: absolute;
@@ -18,4 +17,30 @@
 
 a:hover .tooltip-text {
     display: block;
+}
+
+/* Modality */
+.transition-mode {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+}
+
+.transition-mode:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+.transition-mode:hover .mode-description {
+    display: block !important;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
 }
