@@ -7,6 +7,20 @@ class Helper
         'modality',
     ];
 
+    public $lang = [
+        'it',
+        'en',
+    ];
+
+    public $modality = [
+        'simple_league' => 'simple_league_desc',
+        'league_with_playoffs' => 'league_with_playoffs_desc',
+        'league_with_relegation' => 'league_with_relegation_desc',
+        'direct_elimination' => 'direct_elimination_desc',
+        'group_stage' => 'group_stage_desc',
+        'champions_league' => 'champions_league_desc',
+    ];
+
     public function getAccess($loggato, $level = null)
     {
         if ($loggato && $level == 1) {
@@ -28,11 +42,7 @@ class Helper
         }
     }
 
-
-    public $lang = [
-        'it',
-        'en',
-    ];
+    
     public function loadLanguage($langCode = 'it')
     {
         $path = "Language/$langCode.json";

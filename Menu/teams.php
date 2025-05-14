@@ -4,8 +4,8 @@ if (!isset($_SESSION['user']['id'])) {
     exit();
 }
 $userId = (int) $_SESSION['user']['id'];
-$error  = '';
-$edit   = false;
+$error = '';
+$edit = false;
 $origName = null;
 
 // DELETE
@@ -29,13 +29,13 @@ if (isset($_GET['name'])) {
         [$userId, $origName]
     );
     if ($team) {
-        $edit      = true;
-        $name      = $team['name'];
-        $params    = json_decode($team['params'], true);
+        $edit = true;
+        $name = $team['name'];
+        $params = json_decode($team['params'], true);
         $selGroups = $params['groups'] ?? [];
-        $potereVal = $params['potere']['valore']   ?? '';
+        $potereVal = $params['potere']['valore'] ?? '';
         $potereAtt = $params['potere']['attacco'] ?? '';
-        $potereDif = $params['potere']['difesa']   ?? '';
+        $potereDif = $params['potere']['difesa'] ?? '';
         $colorBack = $params['color']['background'] ?? '#000000';
         $colorText = $params['color']['text'] ?? '#FFFFFF';
         $colorBorder = $params['color']['border'] ?? '#000000';
@@ -44,13 +44,13 @@ if (isset($_GET['name'])) {
 
 // POST (create o update)
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $name      = trim($_POST['nome']);
+    $name = trim($_POST['nome']);
     $selGroups = $_POST['gruppo'] ?? [];
     $newGroups = array_filter(array_map('trim', explode(',', $_POST['nuovi_gruppi'] ?? '')));
-    $groups    = array_unique(array_merge($selGroups, $newGroups));
-    $potereVal = (int) ($_POST['potere_valore']  ?? 0);
+    $groups = array_unique(array_merge($selGroups, $newGroups));
+    $potereVal = (int) ($_POST['potere_valore'] ?? 0);
     $potereAtt = (int) ($_POST['potere_attacco'] ?? 0);
-    $potereDif = (int) ($_POST['potere_difesa']  ?? 0);
+    $potereDif = (int) ($_POST['potere_difesa'] ?? 0);
     $colorBack = $_POST['color_background'] ?? '#000000';
     $colorText = $_POST['color_text'] ?? '#FFFFFF';
     $colorBorder = $_POST['color_border'] ?? '#000000';
@@ -61,14 +61,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $paramsJson = json_encode([
             'groups' => $groups,
             'potere' => [
-                'valore'  => $potereVal,
+                'valore' => $potereVal,
                 'attacco' => $potereAtt,
-                'difesa'  => $potereDif
+                'difesa' => $potereDif
             ],
             'color' => [
                 'background' => $colorBack,
-                'text'       => $colorText,
-                'border'     => $colorBorder
+                'text' => $colorText,
+                'border' => $colorBorder
             ],
         ]);
 
@@ -84,8 +84,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // INSERT (includo user_id)
             $db->insert('teams', [
                 'user_id' => $userId,
-                'name'    => $name,
-                'params'  => $paramsJson
+                'name' => $name,
+                'params' => $paramsJson
             ]);
         }
 
@@ -133,19 +133,16 @@ sort($allGroups, SORT_STRING);
                 <!-- Nome -->
                 <div class="col-md-4">
                     <label for="nome" class="form-label"><?= $langfile['name'] ?></label>
-                    <input type="text" id="nome" name="nome"
-                        class="form-control"
+                    <input type="text" id="nome" name="nome" class="form-control"
                         value="<?= htmlspecialchars($name ?? '') ?>" required>
                 </div>
 
                 <!-- Gruppi (select multipla) -->
                 <div class="col-md-4">
                     <label for="gruppo" class="form-label"><?= $langfile['groups'] ?></label>
-                    <select id="gruppo" name="gruppo[]"
-                        class="form-select" multiple size="4">
+                    <select id="gruppo" name="gruppo[]" class="form-select" multiple size="4">
                         <?php foreach ($allGroups as $g): ?>
-                            <option value="<?= htmlspecialchars($g) ?>"
-                                <?= in_array($g, $selGroups ?? [], true) ? 'selected' : '' ?>>
+                            <option value="<?= htmlspecialchars($g) ?>" <?= in_array($g, $selGroups ?? [], true) ? 'selected' : '' ?>>
                                 <?= htmlspecialchars($g) ?>
                             </option>
                         <?php endforeach ?>
@@ -160,8 +157,7 @@ sort($allGroups, SORT_STRING);
                     <label for="nuovi_gruppi" class="form-label">
                         <?= $langfile['add'] . " " . $langfile['new'] . " " . $langfile['groups'] ?>
                     </label>
-                    <input type="text" id="nuovi_gruppi" name="nuovi_gruppi"
-                        class="form-control"
+                    <input type="text" id="nuovi_gruppi" name="nuovi_gruppi" class="form-control"
                         placeholder="Es. Serie A, Coppa Italia">
                 </div>
 
@@ -171,44 +167,39 @@ sort($allGroups, SORT_STRING);
                     <div class="row">
                         <div class="col-md-4">
                             <label for="potere_valore" class="form-label"><?= $langfile['value'] ?></label>
-                            <input type="number" id="potere_valore" name="potere_valore"
-                                class="form-control"
+                            <input type="number" id="potere_valore" name="potere_valore" class="form-control"
                                 value="<?= htmlspecialchars($potereVal ?? '') ?>">
                         </div>
                         <div class="col-md-4">
                             <label for="potere_attacco" class="form-label"><?= $langfile['attack'] ?></label>
-                            <input type="number" id="potere_attacco" name="potere_attacco"
-                                class="form-control"
+                            <input type="number" id="potere_attacco" name="potere_attacco" class="form-control"
                                 value="<?= htmlspecialchars($potereAtt ?? '') ?>">
                         </div>
                         <div class="col-md-4">
                             <label for="potere_difesa" class="form-label"><?= $langfile['defense'] ?></label>
-                            <input type="number" id="potere_difesa" name="potere_difesa"
-                                class="form-control"
+                            <input type="number" id="potere_difesa" name="potere_difesa" class="form-control"
                                 value="<?= htmlspecialchars($potereDif ?? '') ?>">
                         </div>
                     </div>
 
                 </div>
                 <div class="col-md-6">
-                    <p class="text-center"><?= $langfile['color'] ?></p>
+                    <p class="text-center"><?= $langfile['colors'] ?></p>
                     <div class="row">
                         <div class="col-md-4">
-                            <label for="color_background" class="form-label"><?= $langfile['color_background'] ?></label>
-                            <input type="color" id="color_background" name="color_background"
-                                class="form-control"
+                            <label for="color_background"
+                                class="form-label"><?= $langfile['color_background'] ?></label>
+                            <input type="color" id="color_background" name="color_background" class="form-control"
                                 value="<?= htmlspecialchars($colorBack ?? '#000000') ?>">
                         </div>
                         <div class="col-md-4">
                             <label for="color_text" class="form-label"><?= $langfile['color_text'] ?></label>
-                            <input type="color" id="color_text" name="color_text"
-                                class="form-control"
+                            <input type="color" id="color_text" name="color_text" class="form-control"
                                 value="<?= htmlspecialchars($colorText ?? '#FFFFFF') ?>">
                         </div>
                         <div class="col-md-4">
                             <label for="color_border" class="form-label"><?= $langfile['color_border'] ?></label>
-                            <input type="color" id="color_border" name="color_border"
-                                class="form-control"
+                            <input type="color" id="color_border" name="color_border" class="form-control"
                                 value="<?= htmlspecialchars($colorBorder ?? '#000000') ?>">
                         </div>
                     </div>
@@ -226,19 +217,35 @@ sort($allGroups, SORT_STRING);
 
     <!-- Tabella Squadre -->
     <div class="table-responsive">
-        <table class="table table-striped table-bordered align-middle">
+        <table class="table table-striped table-bordered align-middle" id="myTable">
             <thead class="table-light">
                 <tr>
                     <th><?= $langfile['name'] ?></th>
                     <th><?= $langfile['groups'] ?></th>
-                    <th><?= $langfile['power'] ?> (<?= $langfile['value'] ?>/<?= $langfile['attack'] ?>/<?= $langfile['defense'] ?>)</th>
+                    <th><?= $langfile['value'] ?></th>
+                    <th><?= $langfile['attack'] ?></th>
+                    <th><?= $langfile['defense'] ?></th>
                     <th><?= $langfile['actions'] ?></th>
                 </tr>
             </thead>
             <tbody>
+                <?php
+                // Ordinare le squadre in base al valore di potere['valore']
+                usort($teams, function ($a, $b) {
+                    $pA = json_decode($a['params'], true);
+                    $pB = json_decode($b['params'], true);
+
+                    // Se il valore di 'potere' è presente, usa quello per ordinare
+                    $valoreA = $pA['potere']['valore'] ?? 0; // Se non esiste, usa 0
+                    $valoreB = $pB['potere']['valore'] ?? 0; // Se non esiste, usa 0
+                
+                    // Ordina in ordine crescente (puoi modificare per ordina decrescente se necessario)
+                    return $valoreB <=> $valoreA;
+                });
+                ?>
                 <?php foreach ($teams as $t):
                     $p = json_decode($t['params'], true);
-                ?>
+                    ?>
                     <tr>
                         <td>
                             <div class="rounded-pill text-center" style="
@@ -251,24 +258,28 @@ sort($allGroups, SORT_STRING);
                         </td>
                         <td>
                             <?= !empty($p['groups'])
-                                ? htmlspecialchars(implode(', ', $p['groups']))
+                                ? htmlspecialchars(implode(', ', sort($p['groups']) ? $p['groups'] : []))
                                 : '-' ?>
                         </td>
                         <td>
                             <?= isset($p['potere'])
-                                ? sprintf(
-                                    "%d / %d / %d",
-                                    $p['potere']['valore']  ?? 0,
-                                    $p['potere']['attacco'] ?? 0,
-                                    $p['potere']['difesa']  ?? 0
-                                )
+                                ? htmlspecialchars($p['potere']['valore'] ?? 0)
+                                : '-' ?>
+                        </td>
+                        <td>
+                            <?= isset($p['potere'])
+                                ? htmlspecialchars($p['potere']['attacco'] ?? 0)
+                                : '-' ?>
+                        </td>
+                        <td>
+                            <?= isset($p['potere'])
+                                ? htmlspecialchars($p['potere']['difesa'] ?? 0)
                                 : '-' ?>
                         </td>
                         <td>
                             <a href="?page=teams&name=<?= urlencode($t['name']) ?>"
                                 class="btn btn-sm btn-warning"><?= $langfile['edit'] ?></a>
-                            <a href="?page=teams&delete_name=<?= urlencode($t['name']) ?>"
-                                class="btn btn-sm btn-danger"
+                            <a href="?page=teams&delete_name=<?= urlencode($t['name']) ?>" class="btn btn-sm btn-danger"
                                 onclick="return confirm('Eliminare questa squadra?');">
                                 <?= $langfile['delete'] ?>
                             </a>
