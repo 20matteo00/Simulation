@@ -310,8 +310,11 @@ class Database
             'updated_at' => 'TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'
         ];
 
+        // Chiave primaria
+        $primaryKey = 'id';
+
         // Creazione della tabella
-        return $this->createTable('users', $columns, 'id');
+        return $this->createTable('users', $columns, $primaryKey);
     }
     private function createGroupsTable()
     {
@@ -323,8 +326,10 @@ class Database
             'updated_at' => 'TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'
         ];
 
+        $primaryKey = ['user_id', 'nome']; // Chiave primaria composta
+
         // Chiave primaria composta
-        return $this->createTable('groups', $columns, ['user_id', 'nome']);
+        return $this->createTable('groups', $columns, $primaryKey);
     }
 
     private function createTeamsTable()
@@ -337,8 +342,10 @@ class Database
             'updated_at' => 'TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'
         ];
 
+        $primaryKey = ['user_id', 'nome']; // Chiave primaria composta
+
         // Chiave primaria composta
-        return $this->createTable('teams', $columns, ['user_id', 'nome']);
+        return $this->createTable('teams', $columns, $primaryKey);
     }
 
 
@@ -347,11 +354,11 @@ class Database
      * 
      * @param string $table Nome della tabella
      * @param array $columns Array di definizioni delle colonne
-     * @param string $primaryKey Chiave primaria (opzionale)
+     * @param string|array $primaryKey Chiave primaria (opzionale)
      * @param array $options Opzioni aggiuntive (ENGINE, CHARSET, ecc.)
      * @return bool True se la tabella è stata creata, false altrimenti
      */
-    public function createTable($table, $columns, string|array|null $primaryKey = null, $options = [])
+    public function createTable($table, $columns, $primaryKey = null, $options = [])
     {
         if (empty($columns)) {
             return false;
@@ -362,11 +369,12 @@ class Database
             $columnDefs[] = "`{$name}` {$def}";
         }
 
-        // Supporto per chiave primaria composta
+        // Gestisci la chiave primaria, se è un array crea una chiave primaria composta
         if ($primaryKey !== null) {
             if (is_array($primaryKey)) {
-                $escapedKeys = array_map(fn($key) => "`$key`", $primaryKey);
-                $columnDefs[] = "PRIMARY KEY (" . implode(', ', $escapedKeys) . ")";
+                // Se è un array, aggiungi la chiave primaria composta
+                $primaryKeyString = implode("`, `", $primaryKey);
+                $columnDefs[] = "PRIMARY KEY (`{$primaryKeyString}`)";
             } else {
                 $columnDefs[] = "PRIMARY KEY (`{$primaryKey}`)";
             }

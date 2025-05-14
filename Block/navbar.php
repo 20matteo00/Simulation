@@ -21,8 +21,14 @@
                     </li>
                 <?php endforeach; ?>
             </ul>
-
-            <div class="ms-auto me-3 mb-3 mb-lg-0">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                <?php foreach ($access as $a): ?>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="?page=<?= $a ?>"><?= $langfile[$a] ?></a>
+                    </li>
+                <?php endforeach; ?>
+            </ul>
+            <div class="mx-3 mb-3 mb-lg-0">
                 <!-- Language selector -->
                 <form method="get" action="">
                     <select name="lang" class="form-select form-select-sm" onchange="this.form.submit()">
@@ -32,6 +38,7 @@
                             </option>
                         <?php endforeach; ?>
                     </select>
+                    <input type="hidden" name="page" value="<?= $page ?>">
                 </form>
             </div>
             <div>

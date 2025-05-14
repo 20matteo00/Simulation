@@ -7,11 +7,32 @@ class Helper
         'team',
         'modality',
     ];
+
+    public function getAccess($loggato, $level = null){
+        if ($loggato && $level == 1) {
+            return [
+                'reserved',
+                'profile',
+                'logout',
+            ];
+        } elseif ($loggato) {
+            return [
+                'profile',
+                'logout',
+            ];
+        } else {
+            return [
+                'login',
+                'register',
+            ];
+        }
+    } 
+
     public $lang = [
         'it',
         'en',
     ];
-    function loadLanguage($langCode = 'it')
+    public function loadLanguage($langCode = 'it')
     {
         $path = "Language/$langCode.json";
 

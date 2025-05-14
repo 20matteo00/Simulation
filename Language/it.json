@@ -5,6 +5,11 @@
     "group": "Gruppo",
     "team": "Squadra",
     "modality": "Modalità",
+    "login": "Accesso",
+    "logout": "Disconnetti",
+    "register": "Registrati",
+    "profile": "Profilo",
+    "reserved": "Riservato",
     "search": "Cerca",
 
     "contact": "Contatto",
@@ -12,5 +17,16 @@
     "email": "Email",
     "address": "Indirizzo",
     "links": "Link utili",
-    "social": "Social"
+    "social": "Social",
+
+    "username": "Nome utente",
+    "password": "Password",
+    "confirm_password": "Conferma Password",
+    "already_have_account": "Hai già un account?",
+    "no_account": "Nessun account?",
+    "forgot_password": "Password dimenticata?",
+    "reset_password": "Resetta Password",
+    "empty_fields": "Campi vuoti",
+    "password_mismatch": "Le password non corrispondono",
+    "invalid_credentials": "Credenziali non valide"
 }
