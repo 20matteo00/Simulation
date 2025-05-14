@@ -288,6 +288,8 @@ class Database
     public function createAllTable()
     {
         $this->createUsersTable();
+        $this->createGroupsTable();
+        $this->createTeamsTable();
     }
 
     /**
@@ -303,15 +305,42 @@ class Database
             'username' => 'VARCHAR(255) NOT NULL',
             'email' => 'VARCHAR(255) NOT NULL UNIQUE',
             'password' => 'VARCHAR(255) NOT NULL',
-            'params' => 'JSON'
+            'params' => 'JSON',
+            'created_at' => 'TIMESTAMP DEFAULT CURRENT_TIMESTAMP',
+            'updated_at' => 'TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'
         ];
 
         // Creazione della tabella
-        if (!$this->createTable('users', $columns, 'id')) {
-            return false;
-        }
-        return true;
+        return $this->createTable('users', $columns, 'id');
     }
+    private function createGroupsTable()
+    {
+        $columns = [
+            'user_id' => 'INT NOT NULL',
+            'nome' => 'VARCHAR(255) NOT NULL',
+            'params' => 'JSON',
+            'created_at' => 'TIMESTAMP DEFAULT CURRENT_TIMESTAMP',
+            'updated_at' => 'TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'
+        ];
+
+        // Chiave primaria composta
+        return $this->createTable('groups', $columns, ['user_id', 'nome']);
+    }
+
+    private function createTeamsTable()
+    {
+        $columns = [
+            'user_id' => 'INT NOT NULL',
+            'nome' => 'VARCHAR(255) NOT NULL',
+            'params' => 'JSON',
+            'created_at' => 'TIMESTAMP DEFAULT CURRENT_TIMESTAMP',
+            'updated_at' => 'TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'
+        ];
+
+        // Chiave primaria composta
+        return $this->createTable('teams', $columns, ['user_id', 'nome']);
+    }
+
 
     /**
      * Crea una nuova tabella
@@ -322,7 +351,7 @@ class Database
      * @param array $options Opzioni aggiuntive (ENGINE, CHARSET, ecc.)
      * @return bool True se la tabella è stata creata, false altrimenti
      */
-    public function createTable($table, $columns, $primaryKey = null, $options = [])
+    public function createTable($table, $columns, string|array|null $primaryKey = null, $options = [])
     {
         if (empty($columns)) {
             return false;
@@ -333,8 +362,14 @@ class Database
             $columnDefs[] = "`{$name}` {$def}";
         }
 
+        // Supporto per chiave primaria composta
         if ($primaryKey !== null) {
-            $columnDefs[] = "PRIMARY KEY (`{$primaryKey}`)";
+            if (is_array($primaryKey)) {
+                $escapedKeys = array_map(fn($key) => "`$key`", $primaryKey);
+                $columnDefs[] = "PRIMARY KEY (" . implode(', ', $escapedKeys) . ")";
+            } else {
+                $columnDefs[] = "PRIMARY KEY (`{$primaryKey}`)";
+            }
         }
 
         $defaultOptions = [
@@ -408,4 +443,3 @@ class Database
         $this->close();
     }
 }
-?>
