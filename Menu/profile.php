@@ -46,6 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </form>
         </div>
         <div class="card-footer">
+            <p class="text-center mt-3"><?= $langfile['welcome'] ?> <?= htmlspecialchars($_SESSION['user']['username']) ?></p>
         </div>
     </div>
 </div>

@@ -32,5 +32,6 @@
     "registration_failed": "Registrazione fallita",
     "mail_exists": "L'email esiste già",
     "update": "Aggiorna",
-    "update_failed": "Aggiornamento fallito"
+    "update_failed": "Aggiornamento fallito",
+    "welcome": "Benvenuto"
 }

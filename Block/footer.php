@@ -4,19 +4,17 @@
             <!-- Colonna 1 -->
             <div class="col-md-6 mb-3">
                 <h5><?= $langfile['contact'] ?></h5>
-                <div class="row">
-                    <div class="col-4 fw-bold"><?= $langfile['tel'] ?>:</div>
-                    <div class="col-8"><a href="tel:+123456789" class="text-decoration-none">+123456789</a></div>
-                </div>
-                <div class="row">
-                    <div class="col-4 fw-bold"><?= $langfile['email'] ?>:</div>
-                    <div class="col-8"><a href="mailto:info@example.com" class="text-decoration-none">info@example.com</a></div>
-                </div>
-                <div class="row">
-                    <div class="col-4 fw-bold"><?= $langfile['address'] ?>:</div>
-                    <div class="col-8">123 Main St, City, Country</div>
-                </div>
-
+                <ul class="list-unstyled">
+                    <li class="nav-item">
+                        <a class="text-white text-decoration-none" href="tel:+123456789" target="_blank"><i class="bi bi-phone"></i> <?= $langfile['tel'] ?></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="text-white text-decoration-none" href="mailto:aaaa.aaaaa@aaa.aaa" target="_blank"><i class="bi bi-envelope"></i> <?= $langfile['email'] ?></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="text-white text-decoration-none" href="https://www.google.com/maps/place/@44.4228856,8.8664596,16.17z" target="_blank"><i class="bi bi-geo-alt"></i> <?= $langfile['address'] ?></a>
+                    </li>
+                </ul>
             </div>
 
             <!-- Colonna 2 -->
