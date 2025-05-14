@@ -1,4 +1,8 @@
 <?php
+if (isset($_SESSION['user'])) {
+    header("Location: index.php");
+    exit();
+}
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['login'])) {
         $username = $_POST['username'];

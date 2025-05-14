@@ -22,9 +22,11 @@
                 <?php endforeach; ?>
             </ul>
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                <?php foreach ($access as $a): ?>
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="?page=<?= $a ?>"><?= $langfile[$a] ?></a>
+                <?php foreach ($access as $a => $icon): ?>
+                    <li class="nav-item px-2">
+                        <a class="nav-link active position-relative" aria-current="page" href="?page=<?= $a ?>">
+                            <i class="<?= $icon ?>"></i> <span class="tooltip-text"><?= $langfile[$a] ?></span>
+                        </a>
                     </li>
                 <?php endforeach; ?>
             </ul>

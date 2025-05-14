@@ -8,25 +8,27 @@ class Helper
         'modality',
     ];
 
-    public function getAccess($loggato, $level = null){
+    public function getAccess($loggato, $level = null)
+    {
         if ($loggato && $level == 1) {
             return [
-                'reserved',
-                'profile',
-                'logout',
+                'reserved' => 'bi bi-shield-lock',
+                'profile'  => 'bi bi-person-circle',
+                'logout'   => 'bi bi-box-arrow-left',
             ];
         } elseif ($loggato) {
             return [
-                'profile',
-                'logout',
+                'profile'  => 'bi bi-person-circle',
+                'logout'   => 'bi bi-box-arrow-left',
             ];
         } else {
             return [
-                'login',
-                'register',
+                'login'    => 'bi bi-box-arrow-in-right',
+                'register' => 'bi bi-person-plus',
             ];
         }
-    } 
+    }
+
 
     public $lang = [
         'it',

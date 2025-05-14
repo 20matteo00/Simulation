@@ -1,4 +1,8 @@
 <?php
+if (isset($_SESSION['user'])) {
+    header("Location: index.php");
+    exit();
+}
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['login'])) {
         $email = $_POST['email'];
@@ -11,6 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $user = $db->getOne("users", "email = '$email'");
             if ($user && password_verify($password, $user['password']) && $email === $user['email']) {
                 $_SESSION['user'] = [
+                    'id' => $user['id'],
                     'username' => $user['username'],
                     'email' => $user['email'],
                     'level' => json_decode($user['params'], true)['level'],

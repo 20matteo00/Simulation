@@ -1,3 +1,21 @@
 :root{
 
 }
+
+.tooltip-text {
+    display: none;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    background: black;
+    color: white;
+    padding: 0.5em;
+    border-radius: 4px;
+    white-space: nowrap;
+    font-size: 0.75rem;
+    z-index: 1000;
+}
+
+a:hover .tooltip-text {
+    display: block;
+}

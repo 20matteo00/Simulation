@@ -39,6 +39,7 @@ $page = isset($_GET['page']) ? $_GET['page'] : 'home';
 </head>
 
 <body>
+    <?php ob_start(); ?>
     <div class="header">
         <?php include_once 'Block/navbar.php'; ?>
     </div>

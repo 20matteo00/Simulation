@@ -30,5 +30,7 @@
     "password_mismatch": "Passwords do not match",
     "invalid_credentials": "Invalid credentials",
     "registration_failed": "Registration failed",
-    "mail_exists": "Email already exists"
+    "mail_exists": "Email already exists",
+    "update": "Update",
+    "update_failed": "Update failed"
 }
