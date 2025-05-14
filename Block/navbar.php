@@ -1,16 +1,7 @@
 <?php
-$menu = [
-    'group',
-    'team',
-    'modality',
-];
-$l = [
-    'it',
-    'en',
-];
-?>
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
+?>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
     <div class="container">
         <!-- Brand -->
         <a class="navbar-brand fw-bold" href="index.php"><?= $langfile['site_name'] ?></a>
@@ -24,9 +15,9 @@ $l = [
         <!-- Navbar links -->
         <div class="collapse navbar-collapse" id="mainNavbar">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <?php foreach ($menu as $m): ?>
+                <?php foreach ($help->menu as $m): ?>
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="<?= "Menu/$m.php" ?>"><?= $langfile[$m] ?></a>
+                        <a class="nav-link active" aria-current="page" href="?page=<?= $m ?>"><?= $langfile[$m] ?></a>
                     </li>
                 <?php endforeach; ?>
             </ul>
@@ -35,7 +26,7 @@ $l = [
                 <!-- Language selector -->
                 <form method="get" action="">
                     <select name="lang" class="form-select form-select-sm" onchange="this.form.submit()">
-                        <?php foreach ($l as $langOption): ?>
+                        <?php foreach ($help->lang as $langOption): ?>
                             <option value="<?= $langOption ?>" <?= $lang === $langOption ? 'selected' : '' ?>>
                                 <?= strtoupper($langOption) ?>
                             </option>

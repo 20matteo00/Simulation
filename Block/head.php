@@ -12,6 +12,7 @@
 
 <!-- STYLE -->
 <link rel="stylesheet" href="Media/css/bootstrap.css">
+<link rel="stylesheet" href="Media/css/icone/font/bootstrap-icons.css">
 <link rel="stylesheet" href="Media/css/style.css">
 
 <!-- SCRIPT -->

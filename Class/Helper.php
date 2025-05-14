@@ -2,6 +2,15 @@
 
 class Helper
 {
+    public $menu = [
+        'group',
+        'team',
+        'modality',
+    ];
+    public $lang = [
+        'it',
+        'en',
+    ];
     function loadLanguage($langCode = 'it')
     {
         $path = "Language/$langCode.json";
@@ -14,4 +23,3 @@ class Helper
         return json_decode($json, true);
     }
 }
-

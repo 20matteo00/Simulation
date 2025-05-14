@@ -5,5 +5,12 @@
     "group": "Gruppo",
     "team": "Squadra",
     "modality": "Modalità",
-    "search": "Cerca"
+    "search": "Cerca",
+
+    "contact": "Contatto",
+    "tel": "Telefono",
+    "email": "Email",
+    "address": "Indirizzo",
+    "links": "Link utili",
+    "social": "Social"
 }
