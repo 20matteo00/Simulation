@@ -36,6 +36,9 @@ if (isset($_GET['name'])) {
         $potereVal = $params['potere']['valore']   ?? '';
         $potereAtt = $params['potere']['attacco'] ?? '';
         $potereDif = $params['potere']['difesa']   ?? '';
+        $colorBack = $params['color']['background'] ?? '#000000';
+        $colorText = $params['color']['text'] ?? '#FFFFFF';
+        $colorBorder = $params['color']['border'] ?? '#000000';
     }
 }
 
@@ -48,9 +51,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $potereVal = (int) ($_POST['potere_valore']  ?? 0);
     $potereAtt = (int) ($_POST['potere_attacco'] ?? 0);
     $potereDif = (int) ($_POST['potere_difesa']  ?? 0);
+    $colorBack = $_POST['color_background'] ?? '#000000';
+    $colorText = $_POST['color_text'] ?? '#FFFFFF';
+    $colorBorder = $_POST['color_border'] ?? '#000000';
 
     if ($name === '') {
-        $error = "Il nome non può essere vuoto.";
+        $error = $langfile['empty_name'];
     } else {
         $paramsJson = json_encode([
             'groups' => $groups,
@@ -58,7 +64,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 'valore'  => $potereVal,
                 'attacco' => $potereAtt,
                 'difesa'  => $potereDif
-            ]
+            ],
+            'color' => [
+                'background' => $colorBack,
+                'text'       => $colorText,
+                'border'     => $colorBorder
+            ],
         ]);
 
         if (!empty($_POST['orig_name'])) {
@@ -109,7 +120,7 @@ $allGroups = array_unique($allGroups, SORT_STRING);
     <div class="card mb-4 shadow rounded-4">
         <div class="card-header bg-primary text-white">
             <h2 class="mb-0 text-center">
-                <?= $edit ? 'Modifica Squadra' : 'Nuova Squadra' ?>
+                <?= $edit ? $langfile['edit'] . " " . $langfile['team'] : $langfile['new'] . " " . $langfile['team'] ?>
             </h2>
         </div>
         <div class="card-body">
@@ -119,16 +130,16 @@ $allGroups = array_unique($allGroups, SORT_STRING);
                 <?php endif ?>
 
                 <!-- Nome -->
-                <div class="col-md-6">
-                    <label for="nome" class="form-label">Nome</label>
+                <div class="col-md-4">
+                    <label for="nome" class="form-label"><?= $langfile['name'] ?></label>
                     <input type="text" id="nome" name="nome"
                         class="form-control"
                         value="<?= htmlspecialchars($name ?? '') ?>" required>
                 </div>
 
                 <!-- Gruppi (select multipla) -->
-                <div class="col-md-6">
-                    <label for="gruppo" class="form-label">Gruppi (selezione multipla)</label>
+                <div class="col-md-4">
+                    <label for="gruppo" class="form-label"><?= $langfile['groups'] ?></label>
                     <select id="gruppo" name="gruppo[]"
                         class="form-select" multiple size="4">
                         <?php foreach ($allGroups as $g): ?>
@@ -139,14 +150,14 @@ $allGroups = array_unique($allGroups, SORT_STRING);
                         <?php endforeach ?>
                     </select>
                     <div class="form-text">
-                        Tieni premuto Ctrl (Windows) o Cmd (Mac) per selezionare più gruppi.
+                        <?= $langfile['select_multiple'] ?>
                     </div>
                 </div>
 
                 <!-- Nuovi gruppi -->
-                <div class="col-12">
+                <div class="col-md-4">
                     <label for="nuovi_gruppi" class="form-label">
-                        Aggiungi nuovi gruppi (separati da virgola)
+                        <?= $langfile['add'] . " " . $langfile['new'] . " " . $langfile['groups'] ?>
                     </label>
                     <input type="text" id="nuovi_gruppi" name="nuovi_gruppi"
                         class="form-control"
@@ -154,28 +165,58 @@ $allGroups = array_unique($allGroups, SORT_STRING);
                 </div>
 
                 <!-- Potere: Valore, Attacco, Difesa -->
-                <div class="col-md-4">
-                    <label for="potere_valore" class="form-label">Potere (Valore)</label>
-                    <input type="number" id="potere_valore" name="potere_valore"
-                        class="form-control"
-                        value="<?= htmlspecialchars($potereVal ?? '') ?>">
+                <div class="col-md-6">
+                    <p class="text-center"><?= $langfile['power'] ?></p>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label for="potere_valore" class="form-label"><?= $langfile['value'] ?></label>
+                            <input type="number" id="potere_valore" name="potere_valore"
+                                class="form-control"
+                                value="<?= htmlspecialchars($potereVal ?? '') ?>">
+                        </div>
+                        <div class="col-md-4">
+                            <label for="potere_attacco" class="form-label"><?= $langfile['attack'] ?></label>
+                            <input type="number" id="potere_attacco" name="potere_attacco"
+                                class="form-control"
+                                value="<?= htmlspecialchars($potereAtt ?? '') ?>">
+                        </div>
+                        <div class="col-md-4">
+                            <label for="potere_difesa" class="form-label"><?= $langfile['defense'] ?></label>
+                            <input type="number" id="potere_difesa" name="potere_difesa"
+                                class="form-control"
+                                value="<?= htmlspecialchars($potereDif ?? '') ?>">
+                        </div>
+                    </div>
+
                 </div>
-                <div class="col-md-4">
-                    <label for="potere_attacco" class="form-label">Potere (Attacco)</label>
-                    <input type="number" id="potere_attacco" name="potere_attacco"
-                        class="form-control"
-                        value="<?= htmlspecialchars($potereAtt ?? '') ?>">
-                </div>
-                <div class="col-md-4">
-                    <label for="potere_difesa" class="form-label">Potere (Difesa)</label>
-                    <input type="number" id="potere_difesa" name="potere_difesa"
-                        class="form-control"
-                        value="<?= htmlspecialchars($potereDif ?? '') ?>">
+                <div class="col-md-6">
+                    <p class="text-center"><?= $langfile['color'] ?></p>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label for="color_background" class="form-label"><?= $langfile['color_background'] ?></label>
+                            <input type="color" id="color_background" name="color_background"
+                                class="form-control"
+                                value="<?= htmlspecialchars($colorBack ?? '#000000') ?>">
+                        </div>
+                        <div class="col-md-4">
+                            <label for="color_text" class="form-label"><?= $langfile['color_text'] ?></label>
+                            <input type="color" id="color_text" name="color_text"
+                                class="form-control"
+                                value="<?= htmlspecialchars($colorText ?? '#FFFFFF') ?>">
+                        </div>
+                        <div class="col-md-4">
+                            <label for="color_border" class="form-label"><?= $langfile['color_border'] ?></label>
+                            <input type="color" id="color_border" name="color_border"
+                                class="form-control"
+                                value="<?= htmlspecialchars($colorBorder ?? '#000000') ?>">
+                        </div>
+                    </div>
+
                 </div>
 
                 <div class="col-12 text-end">
                     <button type="submit" class="btn btn-success">
-                        <?= $edit ? 'Salva Modifiche' : 'Crea Squadra' ?>
+                        <?= $edit ? $langfile['update'] : $langfile['new'] . " " . $langfile['team'] ?>
                     </button>
                 </div>
             </form>
@@ -187,10 +228,10 @@ $allGroups = array_unique($allGroups, SORT_STRING);
         <table class="table table-striped table-bordered align-middle">
             <thead class="table-light">
                 <tr>
-                    <th>Nome</th>
-                    <th>Gruppi</th>
-                    <th>Potere (V/A/D)</th>
-                    <th>Azioni</th>
+                    <th><?= $langfile['name'] ?></th>
+                    <th><?= $langfile['groups'] ?></th>
+                    <th><?= $langfile['power'] ?> (<?= $langfile['value'] ?>/<?= $langfile['attack'] ?>/<?= $langfile['defense'] ?>)</th>
+                    <th><?= $langfile['actions'] ?></th>
                 </tr>
             </thead>
             <tbody>
@@ -198,7 +239,15 @@ $allGroups = array_unique($allGroups, SORT_STRING);
                     $p = json_decode($t['params'], true);
                 ?>
                     <tr>
-                        <td><?= htmlspecialchars($t['name']) ?></td>
+                        <td>
+                            <div class="rounded-pill text-center" style="
+                            background-color: <?= htmlspecialchars($p['color']['background'] ?? '#000000') ?>; 
+                            border: 1px solid <?= htmlspecialchars($p['color']['border'] ?? '#000000') ?>; 
+                            color: <?= htmlspecialchars($p['color']['text'] ?? '#FFFFFF') ?>;
+                            padding: 5px;">
+                                <strong><?= htmlspecialchars($t['name']) ?></strong>
+                            </div>
+                        </td>
                         <td>
                             <?= !empty($p['groups'])
                                 ? htmlspecialchars(implode(', ', $p['groups']))
@@ -216,11 +265,11 @@ $allGroups = array_unique($allGroups, SORT_STRING);
                         </td>
                         <td>
                             <a href="?page=teams&name=<?= urlencode($t['name']) ?>"
-                                class="btn btn-sm btn-warning">Modifica</a>
+                                class="btn btn-sm btn-warning"><?= $langfile['edit'] ?></a>
                             <a href="?page=teams&delete_name=<?= urlencode($t['name']) ?>"
                                 class="btn btn-sm btn-danger"
                                 onclick="return confirm('Eliminare questa squadra?');">
-                                Elimina
+                                <?= $langfile['delete'] ?>
                             </a>
                         </td>
                     </tr>
