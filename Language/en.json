@@ -50,6 +50,7 @@
     "delete_failure": "Delete failed",
     "select_team": "Select team",
     "select_group": "Select group",
+    "update_failure": "Update failed",
 
     "round_robin": "Round Robin",
     "round_robin_desc": "Each team plays against all others once (or twice, home and away). The one with most points wins.",

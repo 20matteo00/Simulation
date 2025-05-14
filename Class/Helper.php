@@ -3,8 +3,7 @@
 class Helper
 {
     public $menu = [
-        'group',
-        'team',
+        'teams',
         'modality',
     ];
 

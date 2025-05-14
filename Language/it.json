@@ -50,6 +50,7 @@
     "delete_failure": "Eliminazione fallita",
     "select_team": "Seleziona squadra",
     "select_group": "Seleziona gruppo",
+    "update_failure": "Aggiornamento fallito",
 
     "round_robin": "Girone all'italiana",
     "round_robin_desc": "Ogni squadra gioca contro tutte le altre una volta (o due, andata e ritorno). Vince chi fa più punti.",
