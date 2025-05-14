@@ -11,33 +11,41 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $error = $langfile['empty_fields'];
         } elseif ($password !== $confirm_password) {
             $error = $langfile['password_mismatch'];
+        } elseif ($db->getOne("users", "email = '$email'")) {
+            $error = $langfile['mail_exists'];
         } else {
-            $db->insert("users", [
+            $insert = $db->insert("users", [
                 'username' => $username,
                 'email' => $email,
                 'password' => password_hash($password, PASSWORD_BCRYPT),
                 'params' => json_encode([
                     'lang' => $lang,
-                    'level' => 1
+                    'level' => 3
                 ])
             ]);
-            $_SESSION['user'] = [
-                'username' => $username,
-                'email' => $email,
-                'level' => 1,
-                'lang' => $lang
-            ];
-            header("Location: index.php");
-            exit();
+            if (!$insert) {
+                $error = $langfile['registration_failed'];
+            } else {
+                $_SESSION['user'] = [
+                    'username' => $username,
+                    'email' => $email,
+                    'level' => 3,
+                    'lang' => $lang
+                ];
+                header("Location: index.php");
+                exit();
+            }
         }
     }
 }
 ?>
 
 <div class="container">
-    <div class="alert alert-danger" role="alert">
-        <?php if (isset($error)) echo $error; ?>
-    </div>
+    <?php if (isset($error)) : ?>
+        <div class="alert alert-danger" role="alert">
+            <?= $error ?>
+        </div>
+    <?php endif; ?>
     <div class="card bg-white text-dark shadow rounded-4">
         <div class="card-header">
             <h2 class="text-center"><?= $langfile['register'] ?></h2>
@@ -66,7 +74,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </form>
         </div>
         <div class="card-footer">
-            <p class="text-center mt-3"><?= $langfile['already_have_account'] ?> <a href="login.php" class="text-decoration-none"><?= $langfile['login'] ?></a></p>
+            <p class="text-center mt-3"><?= $langfile['already_have_account'] ?> <a href="?page=login" class="text-decoration-none"><?= $langfile['login'] ?></a></p>
         </div>
     </div>
 </div>

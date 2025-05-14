@@ -26,9 +26,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 ?>
 <div class="container">
-    <div class="alert alert-danger" role="alert">
-        <?php if (isset($error)) echo $error; ?>
-    </div>
+    <?php if (isset($error)) : ?>
+        <div class="alert alert-danger" role="alert">
+            <?= $error ?>
+        </div>
+    <?php endif; ?>
     <div class="card bg-white text-dark shadow rounded-4">
         <div class="card-header">
             <h2 class="text-center"><?= $langfile['login'] ?></h2>
@@ -49,8 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </form>
         </div>
         <div class="card-footer">
-            <p class="text-center mt-3"><?= $langfile['no_account'] ?> <a href="register.php" class="text-decoration-none"><?= $langfile['register'] ?></a></p>
-            <p class="text-center mt-3"><?= $langfile['forgot_password'] ?> <a href="reset.php" class="text-decoration-none"><?= $langfile['reset_password'] ?></a></p>
+            <p class="text-center mt-3"><?= $langfile['no_account'] ?> <a href="?page=register" class="text-decoration-none"><?= $langfile['register'] ?></a></p>
         </div>
     </div>
 </div>

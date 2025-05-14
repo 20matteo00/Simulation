@@ -28,5 +28,7 @@
     "reset_password": "Reset Password",
     "empty_fields": "Empty fields",
     "password_mismatch": "Passwords do not match",
-    "invalid_credentials": "Invalid credentials"
+    "invalid_credentials": "Invalid credentials",
+    "registration_failed": "Registration failed",
+    "mail_exists": "Email already exists"
 }
