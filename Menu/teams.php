@@ -110,6 +110,7 @@ foreach ($teams as $t) {
     }
 }
 $allGroups = array_unique($allGroups, SORT_STRING);
+sort($allGroups, SORT_STRING);
 ?>
 
 <div class="container py-5">
