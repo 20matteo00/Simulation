@@ -5,6 +5,7 @@
     "group": "Group",
     "team": "Team",
     "modality": "Modality",
+    "competitions": "Competitions",
     "login": "Login",
     "logout": "Logout",
     "register": "Register",

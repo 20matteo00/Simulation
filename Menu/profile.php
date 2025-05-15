@@ -1,6 +1,6 @@
 <?php
 if (!isset($_SESSION['user'])) {
-    header("Location: index.php");
+    header("Location: index.php?lang=" . $lang);
     exit();
 }
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $error = $langfile['update_failed'];
             } else {
                 $_SESSION['user']['username'] = $username;
-                header("Location: index.php");
+                header("Location: index.php?lang=" . $lang);
                 exit();
             }
         }

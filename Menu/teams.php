@@ -1,6 +1,6 @@
 <?php
 if (!isset($_SESSION['user']['id'])) {
-    header("Location: index.php");
+    header("Location: index.php?lang=" . $lang);
     exit();
 }
 $userId = (int) $_SESSION['user']['id'];
@@ -16,7 +16,7 @@ if (isset($_GET['delete_name'])) {
         "user_id = ? AND name = ?",
         [$userId, $deleteName]
     );
-    header("Location: index.php?page=teams");
+    header("Location: index.php?page=teams&lang=" . $lang);
     exit;
 }
 
@@ -89,7 +89,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             ]);
         }
 
-        header("Location: index.php?page=teams");
+        header("Location: index.php?page=teams&lang=" . $lang);
         exit;
     }
 }
@@ -277,9 +277,9 @@ sort($allGroups, SORT_STRING);
                                 : '-' ?>
                         </td>
                         <td>
-                            <a href="?page=teams&name=<?= urlencode($t['name']) ?>"
+                            <a href="?page=teams&lang=<?= $lang ?>&name=<?= urlencode($t['name']) ?>"
                                 class="btn btn-sm btn-warning"><?= $langfile['edit'] ?></a>
-                            <a href="?page=teams&delete_name=<?= urlencode($t['name']) ?>" class="btn btn-sm btn-danger"
+                            <a href="?page=teams&lang=<?= $lang ?>&delete_name=<?= urlencode($t['name']) ?>" class="btn btn-sm btn-danger"
                                 onclick="return confirm('Eliminare questa squadra?');">
                                 <?= $langfile['delete'] ?>
                             </a>

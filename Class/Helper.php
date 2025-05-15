@@ -5,6 +5,7 @@ class Helper
     public $menu = [
         'teams',
         'modality',
+        'competitions',
     ];
 
     public $lang = [

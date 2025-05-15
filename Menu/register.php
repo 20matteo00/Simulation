@@ -1,6 +1,6 @@
 <?php
 if (isset($_SESSION['user'])) {
-    header("Location: index.php");
+    header("Location: index.php?lang=" . $lang);
     exit();
 }
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -30,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (!$insert) {
                 $error = $langfile['registration_failed'];
             } else {
-                header("Location: index.php?page=login");
+                header("Location: index.php?page=login&lang=" . $lang);
                 exit();
             }
         }
@@ -72,7 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </form>
         </div>
         <div class="card-footer">
-            <p class="text-center mt-3"><?= $langfile['already_have_account'] ?> <a href="?page=login" class="text-decoration-none"><?= $langfile['login'] ?></a></p>
+            <p class="text-center mt-3"><?= $langfile['already_have_account'] ?> <a href="?page=login&lang=<?= $lang ?>" class="text-decoration-none"><?= $langfile['login'] ?></a></p>
         </div>
     </div>
 </div>

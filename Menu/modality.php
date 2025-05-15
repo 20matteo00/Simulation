@@ -11,7 +11,7 @@
                             <p>
                                 <?= htmlspecialchars($langfile[$desc]) ?> <!-- Correzione qui -->
                             </p>
-                            <a href="?page=competition&mod=<?= $title ?>" class="btn btn-success mt-2">
+                            <a href="?page=competition&lang=<?= $lang ?>&mod=<?= $title ?>" class="btn btn-success mt-2">
                                 <?= htmlspecialchars($langfile['test']) ?>
                             </a>
                         </div>

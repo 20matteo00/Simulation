@@ -23,7 +23,7 @@
                 <ul class="list-unstyled">
                     <?php foreach ($help->menu as $m): ?>
                         <li class="nav-item">
-                            <a class="text-white text-decoration-none" aria-current="page" href="?page=<?= $m ?>"><?= $langfile[$m] ?></a>
+                            <a class="text-white text-decoration-none" aria-current="page" href="?page=<?= $m ?>&lang=<?= $lang ?>"><?= $langfile[$m] ?></a>
                         </li>
                     <?php endforeach; ?>
                 </ul>

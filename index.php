@@ -25,7 +25,7 @@ $lang = isset($_GET['lang']) ? $_GET['lang'] : 'it';
 $langfile = $help->loadLanguage($lang);
 
 /* Page */
-$page = isset($_GET['page']) ? $_GET['page'] : 'home';
+$page = isset($_GET['page']) ? $_GET['page'] : 'modality';
 
 /* var_dump($_SESSION); */
 

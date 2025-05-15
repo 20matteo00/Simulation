@@ -1,6 +1,6 @@
 <?php
 if (isset($_SESSION['user'])) {
-    header("Location: index.php");
+    header("Location: index.php?lang=" . $lang);
     exit();
 }
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -21,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     'level' => json_decode($user['params'], true)['level'],
                     'lang' => json_decode($user['params'], true)['lang']
                 ];
-                header("Location: index.php");
+                header("Location: index.php?lang=" . $lang);
                 exit();
             } else {
                 $error = $langfile['invalid_credentials'];
@@ -56,7 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </form>
         </div>
         <div class="card-footer">
-            <p class="text-center mt-3"><?= $langfile['no_account'] ?> <a href="?page=register" class="text-decoration-none"><?= $langfile['register'] ?></a></p>
+            <p class="text-center mt-3"><?= $langfile['no_account'] ?> <a href="?page=register&lang=<?= $lang ?>" class="text-decoration-none"><?= $langfile['register'] ?></a></p>
         </div>
     </div>
 </div>
