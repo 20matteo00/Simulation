@@ -43,7 +43,7 @@ class Helper
         }
     }
 
-    
+
     public function loadLanguage($langCode = 'it')
     {
         $path = "Language/$langCode.json";
@@ -54,5 +54,72 @@ class Helper
 
         $json = file_get_contents($path);
         return json_decode($json, true);
+    }
+
+    public function getAllGroups($teams)
+    {
+        $allGroups = [];
+        foreach ($teams as $t) {
+            $p = json_decode($t['params'], true);
+            if (!empty($p['groups'])) {
+                $allGroups = array_merge($allGroups, $p['groups']);
+            }
+        }
+        $allGroups = array_unique($allGroups);
+        sort($allGroups, SORT_STRING);
+        return $allGroups;
+    }
+
+    public function getModalityParams($mod)
+    {
+        $params = [];
+        switch ($mod) {
+            case 'simple_league':
+                $params = [
+                    'points_for_win' => [
+                        'type' => 'number',
+                        'default' => 3,
+                    ],
+                    'points_for_draw' => [
+                        'type' => 'number',
+                        'default' => 1,
+                    ],
+                    'points_for_loss' => [
+                        'type' => 'number',
+                        'default' => 0,
+                    ],
+                    'rounds' => [
+                        'type' => 'number',
+                        'default' => 2,
+                    ],
+                ];
+                break;
+            case 'league_with_playoffs':
+                $params = [
+                    'points_for_win' => [
+                        'type' => 'number',
+                        'default' => 3,
+                    ],
+                    'points_for_draw' => [
+                        'type' => 'number',
+                        'default' => 1,
+                    ],
+                    'points_for_loss' => [
+                        'type' => 'number',
+                        'default' => 0,
+                    ],
+                    'rounds' => [
+                        'type' => 'number',
+                        'default' => 2,
+                    ],
+                    
+                ];
+                break;
+            // Aggiungi altri casi per le altre modalità
+            default:
+                $params = [];
+                break;
+        }
+        return $params;
     }
 }

@@ -53,7 +53,7 @@
     "select_team": "Select team",
     "select_group": "Select group",
     "update_failure": "Update failed",
-    "select_multiple": "Hold Ctrl (Windows) or Cmd (Mac) to select multiple groups.",
+    "select_multiple": "Hold Ctrl (Windows) or Cmd (Mac) to select multiple values.",
     "value": "Value",
     "attack": "Attack",
     "defense": "Defense",
@@ -75,5 +75,10 @@
     "group_stage_desc": "A format featuring a group stage followed by knockout rounds.",
     "champions_league": "Champions League",
     "champions_league_desc": "A format mimicking the famous Champions League",
-    "test": "Test"
+    "test": "Test",
+    "create_competition": "Create Competition",
+    "points_for_win": "Points for Win",
+    "points_for_draw": "Points for Draw",
+    "points_for_loss": "Points for Loss",
+    "rounds": "Rounds"
 }

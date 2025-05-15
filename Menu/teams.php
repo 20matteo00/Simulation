@@ -101,16 +101,8 @@ $teams = $db->getAll(
     [$userId]
 );
 
-// Costruisco l’elenco globale dei gruppi
-$allGroups = [];
-foreach ($teams as $t) {
-    $p = json_decode($t['params'], true);
-    if (!empty($p['groups'])) {
-        $allGroups = array_merge($allGroups, $p['groups']);
-    }
-}
-$allGroups = array_unique($allGroups, SORT_STRING);
-sort($allGroups, SORT_STRING);
+
+$allGroups = $help->getAllGroups($teams);
 ?>
 
 <div class="container py-5">
@@ -145,7 +137,7 @@ sort($allGroups, SORT_STRING);
                             <option value="<?= htmlspecialchars($g) ?>" <?= in_array($g, $selGroups ?? [], true) ? 'selected' : '' ?>>
                                 <?= htmlspecialchars($g) ?>
                             </option>
-                        <?php endforeach ?>
+                        <?php endforeach; ?>
                     </select>
                     <div class="form-text">
                         <?= $langfile['select_multiple'] ?>

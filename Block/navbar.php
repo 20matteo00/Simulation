@@ -40,8 +40,15 @@
                             </option>
                         <?php endforeach; ?>
                     </select>
-                    <input type="hidden" name="page" value="<?= $page ?>">
+
+                    <?php
+                    foreach ($_GET as $key => $value):
+                        if ($key === 'lang') continue; // evitiamo conflitto
+                    ?>
+                        <input type="hidden" name="<?= htmlspecialchars($key) ?>" value="<?= htmlspecialchars($value) ?>">
+                    <?php endforeach; ?>
                 </form>
+
             </div>
             <div>
                 <!-- Search form -->

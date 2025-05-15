@@ -53,7 +53,7 @@
     "select_team": "Seleziona squadra",
     "select_group": "Seleziona gruppo",
     "update_failure": "Aggiornamento fallito",
-    "select_multiple": "Tieni premuto Ctrl (Windows) o Cmd (Mac) per selezionare più gruppi.",
+    "select_multiple": "Tieni premuto Ctrl (Windows) o Cmd (Mac) per selezionare più valori.",
     "value": "Valore",
     "attack": "Attacco",
     "defense": "Difesa",
@@ -75,5 +75,10 @@
     "group_stage_desc": "Un formato che prevede una fase di gironi seguita da una fase ad eliminazione diretta.",
     "champions_league": "Champions League",
     "champions_league_desc": "Un formato che replica quello della famosa Champions League",
-    "test": "Prova"
+    "test": "Prova",
+    "create_competition": "Crea competizione",
+    "points_for_win": "Punti per vittoria",
+    "points_for_draw": "Punti per pareggio",
+    "points_for_loss": "Punti per sconfitta",
+    "rounds": "Turni"
 }

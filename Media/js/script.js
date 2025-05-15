@@ -41,3 +41,32 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 });
+
+document.addEventListener('DOMContentLoaded', function () {
+    const groupSelect = document.getElementById('group');
+    const teamSelect = document.getElementById('team');
+    const allOptions = Array.from(teamSelect.options); // salva tutte le opzioni originali
+
+    groupSelect.addEventListener('change', function () {
+        const selectedGroups = Array.from(groupSelect.selectedOptions).map(opt => opt.value);
+
+        // Svuota le opzioni attuali
+        teamSelect.innerHTML = '';
+
+        // Se non ci sono gruppi selezionati, mostra tutto
+        if (selectedGroups.length === 0) {
+            allOptions.forEach(opt => teamSelect.appendChild(opt));
+            return;
+        }
+
+        // Filtra e aggiunge solo le squadre che hanno almeno un gruppo corrispondente
+        allOptions.forEach(opt => {
+            const optionGroups = opt.dataset.group.split(',').map(g => g.trim());
+            const hasMatch = optionGroups.some(g => selectedGroups.includes(g));
+
+            if (hasMatch) {
+                teamSelect.appendChild(opt);
+            }
+        });
+    });
+});
